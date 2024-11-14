@@ -1,0 +1,8 @@
+schema: schema.graphql
+
+models:
+  Account:
+    model: github.com/silven-dynamics/go-ecommerce/graphql.Account
+    fields:
+      orders:
+        resolver: true
