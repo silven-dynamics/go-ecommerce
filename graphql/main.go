@@ -27,7 +27,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	http.Handle("/graphql", handler.New(s.ToExecutableSchema))
+	http.Handle("/graphql", handler.New(s.ToExecutableSchema()))
 	http.Handle("/playground", playground.Handler("go-commercer", "/graphql"))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
