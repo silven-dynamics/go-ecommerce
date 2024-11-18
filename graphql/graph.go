@@ -1,18 +1,21 @@
 package main
 
-import "github.com/99designs/gqlgen/graphql"
+import (
+	"github.com/99designs/gqlgen/graphql"
+	"github.com/silven-dynamics/go-ecommerce/account"
+)
 
 type Server struct {
-	// accountClient *account.Client
+	accountClient *account.Client
 	// catalogClient *catalog.Client
 	// orderClient   *order.Client
 }
 
 func NewGraphQLServer(accountUrl, catalogUrl, orderUrl string) (*Server, error) {
-	// 	accountClient, err := account.NewClient(accountUrl)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
+	accountClient, err := account.NewClient(accountUrl)
+	if err != nil {
+		return nil, err
+	}
 
 	// 	catalogClient, err := catalog.NewClient(catalogUrl)
 	// 	if err != nil {
@@ -28,7 +31,7 @@ func NewGraphQLServer(accountUrl, catalogUrl, orderUrl string) (*Server, error) 
 	// 	}
 
 	return &Server{
-		// 		accountClient,
+		accountClient,
 		// 		catalogClient,
 		// 		orderClient,
 	}, nil

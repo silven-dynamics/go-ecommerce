@@ -23,7 +23,7 @@ type (
 	}
 )
 
-func newAccountService(r AccountRepository) AccountService {
+func NewAccountService(r AccountRepository) AccountService {
 	return &accountService{r}
 }
 
