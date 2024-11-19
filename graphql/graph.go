@@ -3,11 +3,12 @@ package main
 import (
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/silven-dynamics/go-ecommerce/account"
+	"github.com/silven-dynamics/go-ecommerce/catalog"
 )
 
 type Server struct {
 	accountClient *account.Client
-	// catalogClient *catalog.Client
+	catalogClient *catalog.Client
 	// orderClient   *order.Client
 }
 
@@ -17,11 +18,11 @@ func NewGraphQLServer(accountUrl, catalogUrl, orderUrl string) (*Server, error) 
 		return nil, err
 	}
 
-	// 	catalogClient, err := catalog.NewClient(catalogUrl)
-	// 	if err != nil {
-	// 		accountClient.Close()
-	// 		return nil, err
-	// 	}
+	catalogClient, err := catalog.NewClient(catalogUrl)
+	if err != nil {
+		accountClient.Close()
+		return nil, err
+	}
 
 	// 	orderClient, err := order.NewClient(orderUrl)
 	// 	if err != nil {
@@ -32,7 +33,7 @@ func NewGraphQLServer(accountUrl, catalogUrl, orderUrl string) (*Server, error) 
 
 	return &Server{
 		accountClient,
-		// 		catalogClient,
+		catalogClient,
 		// 		orderClient,
 	}, nil
 }

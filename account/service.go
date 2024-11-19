@@ -13,13 +13,13 @@ type (
 		GetAccounts(ctx context.Context, skip uint64, take uint64) ([]Account, error)
 	}
 
+	accountService struct {
+		repository AccountRepository
+	}
+
 	Account struct {
 		ID   string `json:"id"`
 		Name string `json:"name"`
-	}
-
-	accountService struct {
-		repository AccountRepository
 	}
 )
 
@@ -31,17 +31,17 @@ func (s *accountService) PostAccount(
 	ctx context.Context,
 	name string,
 ) (*Account, error) {
-	account := &Account{
+	account := Account{
 		ID:   ksuid.New().String(),
 		Name: name,
 	}
 
-	err := s.repository.PutAccount(ctx, *account)
+	err := s.repository.PutAccount(ctx, account)
 	if err != nil {
 		return nil, err
 	}
 
-	return account, nil
+	return &account, nil
 }
 
 func (s *accountService) GetAccount(

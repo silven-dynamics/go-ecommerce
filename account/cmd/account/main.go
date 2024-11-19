@@ -38,7 +38,7 @@ func main() {
 	})
 	defer r.Close()
 
-	log.Println("Listening on port 8888...")
+	log.Println("Listening on port 8001...")
 	s := account.NewAccountService(r)
-	log.Fatal(account.ListenGRPC(s, 8888))
+	log.Fatal(account.ListenGRPC(s, 8001))
 }
