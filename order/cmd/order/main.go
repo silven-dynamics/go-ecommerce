@@ -5,31 +5,26 @@ import (
 	"time"
 
 	"github.com/kelseyhightower/envconfig"
-	"github.com/silven-dynamics/go-ecommerce/catalog"
+	"github.com/silven-dynamics/go-ecommerce/order"
 	"github.com/tinrab/retry"
 )
 
 type Config struct {
 	DatabaseURL string `envconfig:"DATABASE_URL"`
+	AccountURL  string `envconfig:"ACCOUNT_SERVICE_URL"`
+	CatalogURL  string `envconfig:"CATALOG_SERVICE_URL"`
 }
 
 func main() {
-	// err := godotenv.Load("./catalog/.env")
-	// if err != nil {
-	// 	log.Fatal("Error loading .env file")
-	// }
-
 	var cfg Config
 	err := envconfig.Process("", &cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("Elasticsearch URL:", cfg.DatabaseURL)
-
-	var r catalog.CatalogRepository
+	var r order.OrderRepository
 	retry.ForeverSleep(2*time.Second, func(_ int) (err error) {
-		r, err = catalog.NewElasticRepository(cfg.DatabaseURL)
+		r, err = order.NewPostgresRepository(cfg.DatabaseURL)
 		if err != nil {
 			log.Println(err)
 		}
@@ -38,6 +33,11 @@ func main() {
 	defer r.Close()
 
 	log.Println("Listening on port 8001...")
-	s := catalog.NewCatalogService(r)
-	log.Fatal(catalog.ListenGRPC(s, 8001))
+	s := order.NewOrderService(r)
+	log.Fatal(order.ListenGRPC(
+		s,
+		cfg.AccountURL,
+		cfg.CatalogURL,
+		8001),
+	)
 }

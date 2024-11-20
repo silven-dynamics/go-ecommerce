@@ -4,12 +4,13 @@ import (
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/silven-dynamics/go-ecommerce/account"
 	"github.com/silven-dynamics/go-ecommerce/catalog"
+	"github.com/silven-dynamics/go-ecommerce/order"
 )
 
 type Server struct {
 	accountClient *account.Client
 	catalogClient *catalog.Client
-	// orderClient   *order.Client
+	orderClient   *order.Client
 }
 
 func NewGraphQLServer(accountUrl, catalogUrl, orderUrl string) (*Server, error) {
@@ -24,17 +25,17 @@ func NewGraphQLServer(accountUrl, catalogUrl, orderUrl string) (*Server, error) 
 		return nil, err
 	}
 
-	// 	orderClient, err := order.NewClient(orderUrl)
-	// 	if err != nil {
-	// 		accountClient.Close()
-	// 		catalogClient.Close()
-	// 		return nil, err
-	// 	}
+	orderClient, err := order.NewClient(orderUrl)
+	if err != nil {
+		accountClient.Close()
+		catalogClient.Close()
+		return nil, err
+	}
 
 	return &Server{
 		accountClient,
 		catalogClient,
-		// 		orderClient,
+		orderClient,
 	}, nil
 }
 

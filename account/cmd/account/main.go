@@ -4,7 +4,6 @@ import (
 	"log"
 	"time"
 
-	"github.com/joho/godotenv"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/silven-dynamics/go-ecommerce/account"
 	"github.com/tinrab/retry"
@@ -15,18 +14,11 @@ type Config struct {
 }
 
 func main() {
-	err := godotenv.Load("./account/.env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
 	var cfg Config
-	err = envconfig.Process("", &cfg)
+	err := envconfig.Process("", &cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	log.Println("Database URL:", cfg.DatabaseURL)
 
 	var r account.AccountRepository
 	retry.ForeverSleep(2*time.Second, func(_ int) (err error) {

@@ -4,7 +4,7 @@ WORKDIR /go/src/github.com/silven-dynamics/go-ecommerce
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN go build -o /app/bin/app ./catalog/cmd/catalog
+RUN go build -o /app/bin/app ./order/cmd/order
 
 FROM debian:bullseye-slim
 WORKDIR /usr/bin

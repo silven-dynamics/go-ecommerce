@@ -1,10 +1,73 @@
-
+version: "3.8"
 
 services:
     account:
+        build:
+            context: .
+            dockerfile: ./account/app.dockerfile
+        depends_on:
+            - account_db
+        environment:
+            DATABASE_URL: postgres://wanjohi:wanjohi@account_db/wanjohi?sslmode=disable
+        restart: on-failure
+
     catalog:
+        build:
+            context: .
+            dockerfile: ./catalog/app.dockerfile
+        depends_on:
+            - catalog_db
+        environment:
+            DATABASE_URL: http://catalog_db:9200
+        restart: on-failure
+
     order:
+        build:
+            context: .
+            dockerfile: ./order/app.dockerfile
+        depends_on:
+            - order_db
+        environment:
+            DATABASE_URL: postgres://wanjohi:wanjohi@order_db/wanjohi?sslmode=disable
+            ACCOUNT_SERVICE_URL: account:8080
+            CATALOG_SERVICE_URL: catalog:8080
+        restart: on-failure
+
     graphql:
+        build:
+            context: .
+            dockerfile: ./graphql/app.dockerfile
+        ports:
+            - 8000:8080
+        depends_on:
+            - account
+            - catalog
+        environment:
+            ACCOUNT_SERVICE_URL: account:8080
+            CATALOG_SERVICE_URL: catalog:8080
+            ORDER_SERVICE_URL: order:8080
+        restart: on-failure
+
     account_db:
+        image: postgres:17
+        environment:
+            POSTGRES_DB: wanjohi
+            POSTGRES_USER: wanjohi
+            POSTGRES_PASSWORD: wanjohi
+        restart: unless-stopped
+
     catalog_db:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.16.0
+        environment:
+            - discovery.type=single-node
+            - xpack.security.enabled=false # Disable security for development
+            - xpack.security.http.ssl.enabled=false
+        restart: unless-stopped
+
     order_db:
+        image: postgres:17
+        environment:
+            POSTGRES_DB: wanjohi
+            POSTGRES_USER: wanjohi
+            POSTGRES_PASSWORD: wanjohi
+        restart: unless-stopped
