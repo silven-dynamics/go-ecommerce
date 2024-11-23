@@ -25,6 +25,7 @@ func NewClient(url string) (*Client, error) {
 	}
 
 	c := pb.NewOrderServiceClient(conn)
+	log.Printf("Connecting to gRPC server: %s", url)
 	return &Client{conn, c}, nil
 }
 

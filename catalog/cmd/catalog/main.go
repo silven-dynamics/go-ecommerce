@@ -14,11 +14,6 @@ type Config struct {
 }
 
 func main() {
-	// err := godotenv.Load("./catalog/.env")
-	// if err != nil {
-	// 	log.Fatal("Error loading .env file")
-	// }
-
 	var cfg Config
 	err := envconfig.Process("", &cfg)
 	if err != nil {

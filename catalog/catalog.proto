@@ -39,7 +39,7 @@ message GetProductsResponse {
     repeated Product products = 1;
 }
 
-service ProductService {
+service CatalogService {
     rpc PostProduct(PostProductRequest) returns (PostProductResponse) {}
     rpc GetProduct(GetProductRequest) returns (GetProductResponse) {}
     rpc GetProducts(GetProductsRequest) returns (GetProductsResponse) {}

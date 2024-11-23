@@ -2,6 +2,7 @@ package account
 
 import (
 	"context"
+	"log"
 
 	pb "github.com/silven-dynamics/go-ecommerce/account/pb"
 	"google.golang.org/grpc"
@@ -23,6 +24,7 @@ func NewClient(url string) (*Client, error) {
 	}
 
 	c := pb.NewAccountServiceClient(conn)
+	log.Printf("Connecting to gRPC server: %s", url)
 	return &Client{conn, c}, nil
 }
 

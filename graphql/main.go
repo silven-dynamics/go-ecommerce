@@ -10,9 +10,9 @@ import (
 )
 
 type AppConfig struct {
-	AccountURL string `envconfig:"ACCOUNT_SERVICE_URL"`
-	CatalogURL string `envconfig:"CATALOG_SERVICE_URL"`
-	OrderURL   string `envconfig:"ORDER_SERVICE_URL"`
+	AccountURL string `envconfig:"ACCOUNT_SERVICE_URL" required:"true"`
+	CatalogURL string `envconfig:"CATALOG_SERVICE_URL" required:"true"`
+	OrderURL   string `envconfig:"ORDER_SERVICE_URL" required:"true"`
 }
 
 func main() {
@@ -28,7 +28,8 @@ func main() {
 	}
 
 	http.Handle("/graphql", handler.New(s.ToExecutableSchema()))
-	http.Handle("/playground", playground.Handler("go-commercer", "/graphql"))
+	http.Handle("/playground", playground.Handler("go-ecommerce", "/graphql"))
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8001", nil))
+	log.Println("Listening on port 8001...")
 }

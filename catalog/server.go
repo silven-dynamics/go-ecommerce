@@ -11,7 +11,7 @@ import (
 )
 
 type grpcServer struct {
-	pb.UnimplementedProductServiceServer
+	pb.UnimplementedCatalogServiceServer
 	catalogService CatalogService
 }
 
@@ -22,7 +22,7 @@ func ListenGRPC(s CatalogService, port int) error {
 	}
 
 	serv := grpc.NewServer()
-	pb.RegisterProductServiceServer(serv, &grpcServer{
+	pb.RegisterCatalogServiceServer(serv, &grpcServer{
 		catalogService: s,
 	})
 	reflection.Register(serv)

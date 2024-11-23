@@ -2,6 +2,7 @@ package catalog
 
 import (
 	"context"
+	"log"
 
 	pb "github.com/silven-dynamics/go-ecommerce/catalog/pb"
 	"google.golang.org/grpc"
@@ -10,7 +11,7 @@ import (
 
 type Client struct {
 	conn    *grpc.ClientConn
-	service pb.ProductServiceClient
+	service pb.CatalogServiceClient
 }
 
 func NewClient(url string) (*Client, error) {
@@ -22,7 +23,8 @@ func NewClient(url string) (*Client, error) {
 		return nil, err
 	}
 
-	c := pb.NewProductServiceClient(conn)
+	c := pb.NewCatalogServiceClient(conn)
+	log.Printf("Connecting to gRPC server: %s", url)
 	return &Client{conn, c}, nil
 }
 
