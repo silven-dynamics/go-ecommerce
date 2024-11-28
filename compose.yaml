@@ -4,7 +4,8 @@ services:
             context: .
             dockerfile: ./account/app.dockerfile
         depends_on:
-            - account_db
+            account_db:
+                condition: service_healthy
         environment:
             DATABASE_URL: postgres://wanjohi:wanjohi@account_db/wanjohi?sslmode=disable
         restart: on-failure
@@ -14,7 +15,8 @@ services:
             context: .
             dockerfile: ./catalog/app.dockerfile
         depends_on:
-            - catalog_db
+            catalog_db:
+                condition: service_healthy
         environment:
             DATABASE_URL: http://catalog_db:9200
         restart: on-failure
@@ -24,7 +26,8 @@ services:
             context: .
             dockerfile: ./order/app.dockerfile
         depends_on:
-            - order_db
+            order_db:
+                condition: service_healthy
         environment:
             DATABASE_URL: postgres://wanjohi:wanjohi@order_db/wanjohi?sslmode=disable
             ACCOUNT_SERVICE_URL: account:8001
@@ -47,25 +50,44 @@ services:
         restart: on-failure
 
     account_db:
-        image: postgres:17
+        build:
+            context: .
+            dockerfile: ./account/db.dockerfile
         environment:
             POSTGRES_DB: wanjohi
             POSTGRES_USER: wanjohi
             POSTGRES_PASSWORD: wanjohi
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U wanjohi -d wanjohi"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
         restart: unless-stopped
 
     catalog_db:
-        image: docker.elastic.co/elasticsearch/elasticsearch:8.16.0
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
         environment:
             - discovery.type=single-node
-            - xpack.security.enabled=false # Disable security for development
+            - xpack.security.enabled=false
             - xpack.security.http.ssl.enabled=false
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:9200"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
         restart: unless-stopped
 
     order_db:
-        image: postgres:17
+        build:
+            context: .
+            dockerfile: ./order/db.dockerfile
         environment:
             POSTGRES_DB: wanjohi
             POSTGRES_USER: wanjohi
             POSTGRES_PASSWORD: wanjohi
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U wanjohi -d wanjohi"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
         restart: unless-stopped

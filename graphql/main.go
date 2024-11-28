@@ -5,7 +5,9 @@ import (
 	"net/http"
 
 	"github.com/99designs/gqlgen/graphql/handler"
+	// "github.com/99designs/gqlgen/graphql/playground"
 	"github.com/99designs/gqlgen/graphql/playground"
+	// "github.com/99designs/gqlgen/handler"
 	"github.com/kelseyhightower/envconfig"
 )
 
@@ -27,8 +29,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	http.Handle("/graphql", handler.New(s.ToExecutableSchema()))
+	// http.Handle("/graphql", handler.New(s.ToExecutableSchema()))
+	// http.Handle("/playground", playground.Handler("go-ecommerce", "/graphql"))
+	http.Handle("/graphql", handler.NewDefaultServer(s.ToExecutableSchema()))
 	http.Handle("/playground", playground.Handler("go-ecommerce", "/graphql"))
+	// http.Handle("/graphql", handler.GraphQL(s.ToExecutableSchema()))
+	// http.Handle("/playground", handler.Playground("go-ecommerce", "/graphql"))
 
 	log.Fatal(http.ListenAndServe(":8001", nil))
 	log.Println("Listening on port 8001...")

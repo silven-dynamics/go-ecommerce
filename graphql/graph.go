@@ -14,17 +14,20 @@ type Server struct {
 }
 
 func NewGraphQLServer(accountUrl, catalogUrl, orderUrl string) (*Server, error) {
+	// connect to account service
 	accountClient, err := account.NewClient(accountUrl)
 	if err != nil {
 		return nil, err
 	}
 
+	// connect to product service
 	catalogClient, err := catalog.NewClient(catalogUrl)
 	if err != nil {
 		accountClient.Close()
 		return nil, err
 	}
 
+	// connect to order service
 	orderClient, err := order.NewClient(orderUrl)
 	if err != nil {
 		accountClient.Close()
@@ -58,5 +61,7 @@ func (s *Server) Account() AccountResolver {
 }
 
 func (s *Server) ToExecutableSchema() graphql.ExecutableSchema {
-	return NewExecutableSchema(Config{Resolvers: s})
+	return NewExecutableSchema(Config{
+		Resolvers: s,
+	})
 }
