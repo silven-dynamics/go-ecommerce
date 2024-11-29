@@ -1,15 +1,16 @@
-module github.com/silven-dynamics/go-ecommerce
+module github.com/stiffinWanjohi/go-ecommerce
 
 go 1.23.3
 
 require (
-	github.com/99designs/gqlgen v0.17.56
+	github.com/99designs/gqlgen v0.17.57
 	github.com/elastic/go-elasticsearch/v8 v8.16.0
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/lib/pq v1.10.9
 	github.com/segmentio/ksuid v1.0.4
+	github.com/silven-dynamics/go-ecommerce v0.0.0-20241128072730-7b5063d57b95
 	github.com/tinrab/retry v1.0.0
-	github.com/vektah/gqlparser/v2 v2.5.19
+	github.com/vektah/gqlparser/v2 v2.5.20
 	google.golang.org/grpc v1.68.0
 	google.golang.org/protobuf v1.35.2
 )
