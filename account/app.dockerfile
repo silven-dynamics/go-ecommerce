@@ -1,6 +1,6 @@
 FROM golang:1.23 AS build
 RUN apt-get update && apt-get install -y gcc g++ make ca-certificates && rm -rf /var/lib/apt/lists/*
-WORKDIR /go/src/github.com/silven-dynamics/go-ecommerce
+WORKDIR /go/src/github.com/stiffinWanjohi/go-ecommerce
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .

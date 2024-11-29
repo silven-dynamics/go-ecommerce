@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	pb "github.com/silven-dynamics/go-ecommerce/order/pb"
+	pb "github.com/stiffinWanjohi/go-ecommerce/order/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

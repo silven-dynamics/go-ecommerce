@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/99designs/gqlgen/graphql"
-	"github.com/silven-dynamics/go-ecommerce/account"
-	"github.com/silven-dynamics/go-ecommerce/catalog"
-	"github.com/silven-dynamics/go-ecommerce/order"
+	"github.com/stiffinWanjohi/go-ecommerce/account"
+	"github.com/stiffinWanjohi/go-ecommerce/catalog"
+	"github.com/stiffinWanjohi/go-ecommerce/order"
 )
 
 type Server struct {

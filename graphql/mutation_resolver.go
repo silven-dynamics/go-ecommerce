@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/silven-dynamics/go-ecommerce/order"
+	"github.com/stiffinWanjohi/go-ecommerce/order"
 )
 
 var (

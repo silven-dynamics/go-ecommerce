@@ -8,9 +8,9 @@ import (
 	"log"
 	"net"
 
-	account "github.com/silven-dynamics/go-ecommerce/account"
-	catalog "github.com/silven-dynamics/go-ecommerce/catalog"
-	pb "github.com/silven-dynamics/go-ecommerce/order/pb"
+	account "github.com/stiffinWanjohi/go-ecommerce/account"
+	catalog "github.com/stiffinWanjohi/go-ecommerce/catalog"
+	pb "github.com/stiffinWanjohi/go-ecommerce/order/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

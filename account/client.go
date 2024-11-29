@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	pb "github.com/silven-dynamics/go-ecommerce/account/pb"
+	pb "github.com/stiffinWanjohi/go-ecommerce/account/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

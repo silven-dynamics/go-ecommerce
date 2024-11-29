@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/kelseyhightower/envconfig"
-	"github.com/silven-dynamics/go-ecommerce/catalog"
+	"github.com/stiffinWanjohi/go-ecommerce/catalog"
 	"github.com/tinrab/retry"
 )
 
